@@ -1,0 +1,123 @@
+---
+title: Building a Fun Berries Classifier Web App with YOLOv8 and Streamlit
+date: '2024-05-02'
+tags: ['Classification', 'Streamlit', 'Yolov8']
+draft: false
+summary: Berries classifier webapp using streamlit powered by custom yolov8 classification model
+---
+
+![Image classification](/static/images/V2-hero.png)
+
+**Introduction:**
+Welcome to Lenny the Raccoon's tutorial on building a berries classifier web app using YOLOv8 and Streamlit! In this tutorial, we'll create a fun and interactive web application that identifies various berries using a deep learning model and displays humorous quotes, courtesy of yours truly, Lenny the Raccoon. Let's get started!
+
+**Prerequisites:**
+
+- Basic understanding of Python
+- Installation of Streamlit, PIL, Ultralytics, and Plotly
+
+Absolutely! Let's add some fun elements to the blog post:
+
+---
+
+**Step 1: Setting Up the Environment**
+
+Before we dive into building our berry classifier web app, let's make sure we have all the necessary ingredients in place. We'll need Streamlit, Pillow, Ultralytics, and Plotly for this recipe. Don't forget to bring your sense of humor along too!
+
+```python
+# Import necessary libraries
+import streamlit as st
+from PIL import Image
+import numpy as np
+from ultralytics import YOLO
+import plotly.graph_objects as go
+```
+
+Here, we've got Streamlit for cooking up our web app, Pillow for slicing and dicing images, Ultralytics for our YOLO model, and Plotly for adding a dash of visual appeal to our predictions.
+
+---
+
+**Step 2: Loading the YOLO Model**
+
+Now, let's bring in the star of our show - the YOLOv8 model. This model is trained to recognize various types of berries, and it's going to be our key ingredient for making accurate predictions.
+
+```python
+# Load the YOLO model
+modelpath = r"./model/best.pt"
+@st.cache_resource()
+def load_model(modelpath):
+    return YOLO(modelpath)
+```
+
+Our trusty `load_model()` function ensures that our YOLO model is ready to go whenever we need it.
+
+---
+
+**Step 3: Creating the Streamlit Web App**
+
+Now, let's get cooking! We'll whip up a fun and interactive web app that allows users to upload images of berries. The app will then identify the type of berry and serve up a tasty dose of humor to go along with it.
+
+```python
+# Set page config
+st.set_page_config(
+    page_title="Berries Classifier",
+    page_icon="🍓",
+    layout="wide"
+)
+
+# Main app
+st.title("🍓Berries Classifier")
+image_file = st.file_uploader('Upload image', type=['png', 'jpg', 'jpeg', 'gif'])
+
+col1, col2 = st.columns(2)
+with col1:
+    if image_file is not None:
+        image = Image.open(image_file)
+        st.image(image=image, use_column_width=True)
+
+with col2:
+    if image_file is not None:
+        model = load_model(modelpath)
+        try:
+            result = model(image)
+            predictions = result if result is not None else None
+            display_results(predictions)
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
+```
+
+In this kitchen, we're keeping things organized with Streamlit columns. On one side, users can upload their berry images, and on the other, our YOLO model will work its magic to make predictions.
+
+---
+
+**Step 4: Displaying Funny Quotes**
+
+What's a good dish without a little seasoning of humor? To add some flavor to our app, we'll serve up some funny quotes based on the predicted berry type.
+
+```python
+# Function to display funny quotes
+def funnyquote(predictions):
+    prediction = np.argmax(predictions[0].probs.data.numpy())
+    if prediction == 0:
+        st.success("Looks like a raccoon's midnight snack! It's a blackberry ")
+    elif prediction == 1:
+        st.success("This berry's so blue, even the raccoon's feeling it! It's a blueberry ")
+    elif prediction == 2:
+        st.success("A berry fit for a raccoon feast! It's a raspberry ")
+    elif prediction == 3:
+        st.success("A berry from the raccoon's secret stash! It's a sea berry ")
+    elif prediction == 4:
+        st.success("Raccoon-approved sweetness! It's a strawberry ")
+    else:
+        st.error("Lenny doesn't classify it")
+```
+
+With Lenny the Raccoon providing the commentary, users are in for a treat as they discover the berry species lurking within their images.
+
+---
+
+**Conclusion**
+
+Congratulations! You've just whipped up a delicious berries classifier web app with a side of humor, all thanks to YOLOv8 and Streamlit. Whether you're identifying berries for a snack or just for fun, this app is sure to bring a smile to your face.
+
+So, grab your favorite berry, fire up the app, and let's get classifying with Lenny the Raccoon! 🍓🦝
