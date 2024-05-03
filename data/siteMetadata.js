@@ -7,10 +7,10 @@ const siteMetadata = {
     'Unlocking the Magic of Computer Vision with Lenny the Raccoon: Exploring Roboflow, One Pixel at a Time!',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://lenny-s-blog.vercel.app/',
+  siteRepo: 'https://github.com/lennytheracoon/lenny-s-Blog',
   siteLogo: '/static/images/lenny.png',
-  socialBanner: '/static/images/twitter-card.png',
+  socialBanner: '/static/images/social.png',
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'lennytheracoon@gmail.com',
   github: 'https://github.com/lennytheracoon',
