@@ -1,0 +1,57 @@
+---
+title: Object Detection with Roboflow
+date: '2024-05-08'
+tags: ['Object detection', 'Roboflow']
+draft: false
+summary: How to train object detection model using Roboflow
+---
+
+![Image classification](/static/images/V4-hero.png)
+
+## How to Classify Images with Roboflow
+
+Using Roboflow, you can create object detection model. First, create an account on the Roboflow website. Then, create a new project in the Roboflow dashboard.
+
+For our example, let’s create a project that detect 'Squirrels' from an image. Specifically,In real-life, this could be used to build backyard protector system. If the Squirrel tracepass your backyard, our object detector detect it and integrated system make some horrible sound to make away from your stuff. let's called our project "Squirrel Detector"
+
+Select the “Object Detection” label in the “Project Type” dropdown. Here’s how your project should look:
+
+![project creation](/static/images/V4-1.png)
+
+Let’s start by copying a [Squirrel Detector 1.1](https://universe.roboflow.com/warren-wiens-d0d4p/squirrel-detector-1.1) dataset from Roboflow Universe.
+
+![Datset](/static/images/V4-2.png)
+
+Next, let’s download the dataset and upload it into our new project in the Roboflow:
+
+![Upload](/static/images/V4-3.png)
+
+We now have the data we need to perform our object detection. But, we don’t have a model yet. That’s our next step. To start detect objects, we need to train a model. To prepare to train our model, we need to:
+
+1. Click “Save and continue” once all of our images are in Roboflow in the page where we uploaded our images above.
+2. Select a train test split from the pop up. You should click on the Method form and then click “Split images between train/valid/test” to make sure your images are split property. 70% of images will go in your training set, 20% go in your validation set, and 10% go in your testing set.
+3. Click “Approve All” and “Add Approved to Dataset” once all of your images are uploaded to add your images to your model. Then, click “Add images”.
+4. Click the “Generate a new version” button.
+5. Now, we’re ready to train our model.
+
+The “Generate a new version” button takes you to a page that lets you customize your new version of your model. For now, let’s leave all values the same as they are. We can click “Generate” in the final tab on the page.
+
+![Model](/static/images/V4-4.png)
+
+Next, we need to click “Train with Roboflow” on the training dashboard so that Roboflow knows you are ready to train the version of the model you just created.
+
+Now, we need to wait for our model to train. This can take anywhere from a few minutes to a few hours, depending on how large your dataset is. Make a cup of your caffeinated beverage of choice and come back to the Roboflow dashboard when you get an email notifying you that your project has been trained.
+
+Once you have a trained model, you can start to use it. Click the “Deploy” tab, where you will see many different ways in which you can deploy your model. For this example, we’re going to upload an image from the internet and see how it is works. Let’s upload an image of a squirrel and see what happens:
+
+![Demo](/static/images/V4-5.png)
+
+Our image has been given the label “squirrel” with a confidence rate of 88%. Our object detection model is working!
+
+Using this same approach, you can generate cdetection models for a vast range of different problems, from detecting defects in a production pipeline to detecting animals that are found on a farm.
+
+Now you have the knowledge to create your own object detection models using Roboflow. If data for your specific problem doesn’t exist, you can annotate images yourself to train your model effectively.
+
+## Conclusion
+
+Object detection is a crucial task in computer vision, enabling machines to identify and locate objects within images. With Roboflow, training object detection models becomes accessible and efficient, opening up possibilities for various industries, including transportation, manufacturing, and security.
