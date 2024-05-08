@@ -1,0 +1,152 @@
+---
+title: Building a Blue Berries Counter Web App with Roboflow and Streamlit
+date: '2024-05-08'
+tags: ['Object detection', 'Streamlit', 'Roboflow', 'Application of Object Detection']
+draft: false
+summary: Berries counter app using Roboflow's inference and supervision with Streamlit
+---
+
+![Image classification](/static/images/V5-hero.png)
+
+**Introduction:**
+Welcome to Lenny the Raccoon's tutorial on building a blueberry counter web app using Roboflow and Streamlit! In this tutorial, we'll create a delightful and interactive web application that counts blueberries in images using a deep learning model and adds a touch of humor, courtesy of yours truly, Lenny the Raccoon. Let's embark on this berry counting adventure together!
+
+**Prerequisites:**
+
+- Basic understanding of Python
+- Installation of Streamlit, OpenCV, and Supervision
+- A good sense of humor (mandatory for this tutorial!)
+
+Absolutely! Let's add some fun elements to the blog post:
+
+---
+
+**Step 1: Setting Up the Environment**
+
+Before we dive into the blueberry counting adventure, let's ensure we have all the necessary ingredients ready. We'll need Streamlit for our web app, OpenCV for image processing, inference for to load model from roboflow universe and Supervision to add annotation and label.
+
+```python
+# Import necessary libraries
+import cv2
+import streamlit as st
+import numpy as np
+import supervision as sv
+from inference import get_model
+```
+
+Here, we've got everything we need to start our blueberry counting journey!
+
+---
+
+**Step 2: Loading the Blueberry Detection Model**
+
+Now, let's bring in the star of our show - the YOLOv8 model. This model is trained to recognize various types of berries, and it's going to be our key ingredient for making accurate predictions.
+
+```python
+# Load the model from roboflow universe
+model = get_model(model_id="blueberry-3ewrk/1")
+```
+
+Our trusty `get_model()` function ensures that our model is ready to go whenever we need it.
+
+Inference enables the deployment of a wide range of pre-trained and foundational models without an API key. To access thousands of fine-tuned models shared by the Roboflow Universe community, configure your API key.
+
+```
+export ROBOFLOW_API_KEY=<YOUR_API_KEY>
+```
+
+---
+
+**Step 3: Creating the Streamlit Web App**
+
+Time to fire up our blueberry counting web app! We'll create a fun and interactive interface where users can upload images, and our model will count the blueberries for them.
+
+```python
+def main():
+    st.title("🫐Blueberry Counter")
+
+    # Upload image
+    uploaded_file = st.file_uploader("Upload Image", type=["jpg", "png"])
+
+    if uploaded_file is not None:
+        # Read and preprocess the image
+        image = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+
+        # Run inference on the image
+        results = model.infer(image_rgb)
+
+        # Count all detections
+        detection_count = count_detections(results)
+
+        # Load the results into the supervision Detections API
+        detections = sv.Detections.from_roboflow(results[0].dict(by_alias=True, exclude_none=True))
+
+        # Create supervision annotators
+        bounding_box_annotator = sv.BoundingBoxAnnotator()
+
+        # Annotate the image with inference results
+        annotated_image = bounding_box_annotator.annotate(scene=image_rgb, detections=detections)
+
+        # Display the annotated image and detection count side by side
+        col1, col2 = st.columns([1, 2])
+        with col1:
+            st.image(annotated_image,  use_column_width=True)
+        with col2:
+            st.success(f"Number of Blueberries: {detection_count}")
+
+if __name__ == "__main__":
+    main()
+```
+
+**Breaking Down the `main()` Function:**
+
+1. **Page Title and File Uploader:**
+   Sets the title of the Streamlit app as "🫐Blueberry Counter".
+   Displays a file uploader widget where users can upload images.
+2. **Image Processing and Inference:**
+   Reads the uploaded image and converts it to RGB.
+   Runs inference on the RGB image using the loaded model.
+3. **Counting Detections:**
+   Counts the number of blueberry detections in the image.
+4. **Supervision API Integration:**
+   Loads the inference results into the Supervision Detections API.
+5. **Annotation and Image Resizing:**
+   Creates a bounding box annotator instance.
+   Annotates the original image with bounding boxes.
+6. **Displaying Results:**
+   Displays the annotated image and the detection count side by side in columns.
+
+In this step, we've cooked up a web app where users can upload images, and our blueberry detection model will count the blueberries and display the results in a humorous way, just like Lenny the Raccoon would!
+
+---
+
+**Step 4: Adding a Touch of Humors**
+
+No blueberry counting adventure would be complete without a sprinkle of humor! Let's serve up some funny commentary based on the number of blueberries detected.
+
+```python
+def count_detections(results):
+    total_count = 0
+    for result in results:
+        total_count += len(result.predictions)
+    return total_count
+
+def display_humor(detection_count):
+    if detection_count == 0:
+        st.error("No blueberries found. Looks like the raccoons beat you to them!")
+    elif detection_count == 1:
+        st.success("Only one blueberry found. That's a raccoon-sized snack!")
+    else:
+        st.info(f"{detection_count} blueberries found. Looks like you hit the jackpot!")
+```
+
+With Lenny's witty remarks, users are sure to have a berry good time using our app!
+
+---
+
+**Conclusion**
+
+Congratulations! You've just whipped up a delightful blueberry counter web app with a side of humor, all thanks to YOLOv8 and Streamlit. Whether you're counting blueberries for a recipe or just for fun, this app is sure to bring a smile to your face.
+
+So, grab your favorite blueberries, fire up the app, and let's get counting with Lenny the Raccoon! 🫐🦝
