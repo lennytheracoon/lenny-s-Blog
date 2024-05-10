@@ -1,0 +1,61 @@
+---
+title: Instance Segmentation with Roboflow
+date: '2024-05-10'
+tags: ['Instance Segmentation', 'Roboflow']
+draft: false
+summary: How to train instance segmentation model using Roboflow
+---
+
+![Instance Segmentation](/static/images/V7-hero.png)
+
+## Spotting the Perfect Berry: Using Roboflow for Instance Segmentation with Strawberries
+
+Have you ever reached for a plump, red strawberry at the grocery store, only to get home and discover it's a little too firm? Or maybe you've nurtured your strawberry plants all season, only to find some berries going bad before they even reach peak ripeness.
+
+What if you could tell, just by looking at an image, whether a strawberry is perfectly ripe and ready to eat? This is where instance segmentation with Roboflow comes in.
+
+## Instance Segmentation: Seeing Beyond the Box
+
+Instance segmentation is a powerful computer vision technique that goes beyond simple object detection. While object detection can identify objects in an image, like a strawberry, instance segmentation takes it a step further. It can not only tell you there's a strawberry in the image, but it can also outline the exact shape and size of each individual berry.
+
+## Using Roboflow to Train Your Strawberry Sorter
+
+Roboflow is a platform that makes instance segmentation accessible, even for those without extensive coding experience. Let's walk through how you can use Roboflow to create a model that can differentiate between ripe and unripe strawberries.
+
+## Setting Up Your Roboflow Project
+
+Head over to Roboflow and create an account. Then, create a new project specifically for your strawberry sorting needs. In the "Project Type" dropdown, select "Instance Segmentation."
+
+![Project creation](/static/images/V7-1.png)
+
+## Gathering Your Strawberry Data
+
+To train your model, you'll need a dataset of images containing strawberries. You can find labeled datasets online or collect your own images. If you're collecting your own data, be sure to capture a variety of strawberries, including ripe, unripe, and even some that might be a little bruised or moldy. The more diversity in your data, the better your model will perform.
+
+Let’s start by copying a [Strawberry status](https://universe.roboflow.com/ba-yokth/strawberry-status) dataset from Roboflow Universe.
+
+![Dataset](/static/images/V7-2.png)
+
+## Uploading and Labeling Your Dataset
+
+Once you have your strawberry images, upload them to your Roboflow project. Here's where the instance segmentation magic happens. Roboflow's user-friendly interface allows you to easily label each strawberry in your images. You'll create a separate label for "ripe" and "unripe" strawberries, and Roboflow will use these labels to train your model to recognize the difference.
+
+![Upload](/static/images/V7-3.png)
+
+## Training Your Model
+
+With your data uploaded and labeled, it's time to train your model! Roboflow offers a streamlined training process. You can customize your training settings, but for beginners, it's often best to start with the defaults. Then, click "Train with Roboflow" and let Roboflow work its magic. Training time will depend on the size and complexity of your dataset, but it typically takes just a few minutes to a few hours.
+
+![Model](/static/images/V7-4.png)
+
+## Putting Your Model to the Test
+
+Once your model is trained, you can test it out on new images. Upload an image of a strawberry, and Roboflow will use your model to segment the image, highlighting each strawberry and classifying it as "ripe" or "unripe" with a confidence score.
+
+![Demo](/static/images/V7-5.png)
+
+**Beyond Strawberries: The Power of Instance Segmentation**
+
+This strawberry sorting example is just a glimpse into the potential of instance segmentation with Roboflow. You can use this same approach to segment objects in a wide range of applications, from identifying different types of flowers in a garden to classifying tumors in medical imaging.
+
+By leveraging the power of Roboflow, you can train custom instance segmentation models to solve your specific problems, opening doors for innovation in various fields.
